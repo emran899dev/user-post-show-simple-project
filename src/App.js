@@ -3,7 +3,7 @@ import {BrowserRouter ,Switch, Route} from "react-router-dom";
 import Header from './components/Header/Header';
 import UserDetails from './components/UserPostDetails/UserPostDetails';
 import NotFount from './components/NotFount/NotFount';
-import User from './components/UserPost/UserPost';
+import UserPost from './components/UserPost/UserPost';
 
 export const PostContext = createContext();
 
@@ -17,7 +17,7 @@ function App() {
         <Header/>
         <Switch>
           <Route exact path="/post/details/:postId" component={UserDetails} />
-          <Route exact path="/" component={User} />
+          <Route exact path="/" component={UserPost} />
           <Route exact path="*" component={NotFount} />
         </Switch>
       </div>

@@ -35,6 +35,9 @@ const UserPosts = () => {
                 <Card className={classes.root}>
                     <CardActionArea style={{backgroundColor:'#87CEFA'}}>
                         <CardContent>
+                        <Typography gutterBottom variant="h5" component="h4">
+                            ID: {id}
+                        </Typography>
                             <Typography gutterBottom variant="h5" component="h2">
                                 {title}
                             </Typography>
