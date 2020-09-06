@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -6,7 +6,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { PostContext } from '../../App';
+import CardHeader from '@material-ui/core/CardHeader';
+import Avatar from '@material-ui/core/Avatar';
 import { Link } from 'react-router-dom';
 
 
@@ -19,36 +20,48 @@ const useStyles = makeStyles({
     },
 });
 
+
 const UserPosts = () => {
     const classes = useStyles();
-    const [posts, setPosts] = useContext(PostContext)
+    const [posts, setPosts] = useState([])
     useEffect(() => {
         const url = 'https://jsonplaceholder.typicode.com/posts';
         fetch(url)
             .then(res => res.json())
             .then(data => setPosts(data))
     }, [])
+    for(let i = 0; i<posts.length ;i++){
+        const random = Math.floor(Math.random() * 90 + 1);
+        posts[i].image = `https://randomuser.me/api/portraits/women/${random}.jpg`;
+    }
     const Post = posts.map(post => {
-        const { id, title, body } = post;
+        const { id, title, body, image} = post;
         return (
             <div style={{ marginTop: '20px' }}>
                 <Card className={classes.root}>
-                    <CardActionArea style={{backgroundColor:'#87CEFA'}}>
+                    <CardActionArea style={{ backgroundColor: '#5e99f7' }}>
+                    <CardHeader
+          avatar={
+            <Avatar aria-label="recipe" className={classes.avatar}>
+              <img src={image} width="100%" alt="nai"/>
+          </Avatar>
+          }
+        />
                         <CardContent>
-                        <Typography gutterBottom variant="h5" component="h4">
-                            ID: {id}
-                        </Typography>
+                            <Typography gutterBottom variant="h5" component="h4">
+                                ID: {id}
+                            </Typography>
                             <Typography gutterBottom variant="h5" component="h2">
-                                {title}
+                               Post Title: {title}
                             </Typography>
                             <Typography variant="body2" color="textSecondary" component="p">
-                                {body}
+                               Post: {body}
                             </Typography>
                         </CardContent>
                     </CardActionArea>
-                    <CardActions style={{backgroundColor:'#87CEFA'}}>
-                        <Link style={{textDecoration:'none'}} to={`/post/details/${id}`}>
-                            <Button  style={{backgroundColor: '#1021e0',color:'#fff'}}>
+                    <CardActions style={{ backgroundColor: '#5e99f7' }}>
+                        <Link style={{ textDecoration: 'none' }} to={`/post/details/${id}`}>
+                            <Button style={{ backgroundColor: '#1021e0', color: '#fff' }}>
                                 Post Details
                             </Button>
                         </Link>
@@ -59,8 +72,17 @@ const UserPosts = () => {
     })
     return (
         <div style={{ width: '45%', margin: 'auto' }}>
-            <div style={{ width: '93%', backgroundColor: '#00CED1', padding: '10px 20px', marginTop: '20px', borderRadius: '5px' }}>
-                <h3 style={{textAlign: 'center'}}>All User Posts </h3>
+            <div style={{ marginTop: '20px' }}>
+                <Card className={classes.root}>
+                    <CardActionArea style={{ backgroundColor: '#87CEFA' }}>
+                        <CardContent>
+                            <Typography style={{ textAlign: 'center' }} gutterBottom variant="h4" component="h4">
+                                User All Post
+                        </Typography>
+
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
             </div>
             {Post}
         </div>
